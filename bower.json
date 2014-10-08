@@ -6,7 +6,7 @@
     "Richard Towers"
   ],
   "description": "A playground for RxJS",
-  "main": "src/app.js",
+  "main": "src/js/app.js",
   "keywords": [
     "Rx"
   ],
