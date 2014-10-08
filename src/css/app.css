@@ -1,0 +1,75 @@
+html, body {
+	height: 100%;
+	background-color: rgb(253, 212, 44);
+	margin: 0;
+}
+
+header {
+	background-color: black;
+	color: rgb(253, 212, 44);
+	margin: 5em 0 0 0;
+	padding-left: 3em;
+	padding-right: 3em;
+}
+
+header img {
+	float: right;
+	height: 1em;
+	padding: 0.1em 0.5em 0 0;
+}
+
+h1 {
+	text-transform: uppercase;
+	font-family: Impact, Helvetica, arial, sans-serif;
+	font-size: 4em;
+}
+
+main {
+	display: block;
+	background-color: #151515;
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 2em;
+	margin-bottom: 2em;
+	min-height: 100%;
+}
+
+#head {
+	fill: white;
+	markerWidth: 16; 
+	markerHeight: 12; 
+	refX: 12; 
+	refY: 6;
+}
+
+text {
+	text-anchor: middle;
+	alignment-baseline: middle;
+	font-family: Impact, Helvetica, arial, sans-serif;
+}
+
+.time-axis {
+	stroke: white;
+	stroke-width: 2px;
+	marker-end: url(#head);
+}
+
+.marble {
+	cursor: move;
+}
+
+.marble circle {
+	fill: rgb(253, 212, 44);
+	stroke: black;
+	stroke-width: 2px;
+}
+
+.marble.alt circle {
+	fill: black;
+	stroke: rgb(253, 212, 44);
+}
+
+.marble.alt text {
+	fill: rgb(253, 212, 44);
+}
