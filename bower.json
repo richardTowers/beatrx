@@ -1,0 +1,26 @@
+{
+  "name": "beatrx",
+  "version": "0.0.0",
+  "homepage": "https://github.com/richardTowers/beatrx",
+  "authors": [
+    "Richard Towers"
+  ],
+  "description": "A playground for RxJS",
+  "main": "src/app.js",
+  "keywords": [
+    "Rx"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.26",
+    "rxjs": "~2.3.12"
+  }
+}
