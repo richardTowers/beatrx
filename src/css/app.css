@@ -4,6 +4,10 @@ html, body {
 	margin: 0;
 }
 
+[ng-cloak] {
+	display: none;
+}
+
 header {
 	background-color: black;
 	color: rgb(253, 212, 44);
@@ -27,6 +31,7 @@ h1 {
 main {
 	display: block;
 	background-color: #151515;
+	color: white;
 	width: 90%;
 	margin-left: auto;
 	margin-right: auto;
