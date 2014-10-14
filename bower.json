@@ -21,6 +21,7 @@
   ],
   "dependencies": {
     "angular": "~1.2.26",
-    "rxjs": "~2.3.12"
+    "rxjs": "~2.3.12",
+    "angular-ui-codemirror": "bower"
   }
 }
