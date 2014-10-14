@@ -4,6 +4,8 @@
 		<meta charset='UTF-8'>
 		<meta name=viewport content='width=device-width, initial-scale=1'>
 		<title>beatrx</title>
+		<link rel="stylesheet" type="text/css" href="../bower_components/codemirror/lib/codemirror.css">
+		<link rel="stylesheet" type="text/css" href="../bower_components/codemirror/theme/blackboard.css">
 		<link rel='stylesheet' href='css/app.css'>
 	</head>
 	<body ng-app='beatrx'>
@@ -15,6 +17,7 @@
 		</header>
 		<main ng-controller='marbles' ng-cloak>
 			<div ng-repeat='(key, value) in inputs' ng-include='"marbles-template.html"'></div>
+<ui-codemirror ui-codemirror-opts='editorOptions' ng-model='src'></ui-codemirror>
 			<div ng-repeat='(key, value) in outputs' ng-include='"marbles-template.html"'></div>
 		</main>
 		<script src='../bower_components/angular/angular.js'></script>
@@ -22,6 +25,9 @@
 		<script src='../bower_components/rxjs/dist/rx.all.js'></script>
 		<script src='../bower_components/rxjs/dist/rx.virtualtime.js'></script>
 		<script src='../bower_components/rxjs/dist/rx.testing.js'></script>
+		<script src="../bower_components/codemirror/lib/codemirror.js"></script>
+		<script src="../bower_components/codemirror/mode/javascript/javascript.js"></script>
+		<script src="../bower_components/angular-ui-codemirror/ui-codemirror.js"></script>
 		<script src='js/app.js'></script>
 		<script type='text/ng-template' id='marbles-template.html'>
 			<h4>{{key}}</h4>

@@ -1,5 +1,6 @@
-angular.module('beatrx', [])
+angular.module('beatrx', ['ui.codemirror'])
 	.controller('marbles', function ($scope) {
+		'use strict';
 
 		$scope.inputs = {
 			first: [
@@ -14,35 +15,57 @@ angular.module('beatrx', [])
 			]
 		};
 
-		var scheduler = new Rx.TestScheduler(),
-			onNext = Rx.ReactiveTest.onNext,
-			onCompleted = Rx.ReactiveTest.onCompleted,
-			subscribe = Rx.ReactiveTest.subscribe;
+		$scope.editorOptions = {
+			mode: "javascript",
+			theme: "blackboard",
+			// Thick indent more like...
+			smartIndent: false
+		};
 
-		var observables = Object.keys($scope.inputs).map(function (key) {
-			return scheduler.createColdObservable(
-				$scope.inputs[key].map(function (value) {
-					return onNext(value.time, { value: value.value, alt: value.alt });
-				}));
-		});
+		$scope.src = 'return first\n' +
+			'\t\t.map(function (x) { return { value: x.value.toLowerCase() }; })\n' +
+			'\t\t.merge(second);';
 
-		var res = scheduler.startWithCreate(function () {
-			return observables[0]
-				.map(function (x) {
-					return { value: x.value.toLowerCase() };
-				})
-				.merge(observables[1]);
-		});
+		function getResult () {
+			try {
+				var scheduler = new Rx.TestScheduler(),
+					onNext = Rx.ReactiveTest.onNext,
+					onCompleted = Rx.ReactiveTest.onCompleted,
+					subscribe = Rx.ReactiveTest.subscribe;
 
-		var result = res.messages.map(function (message) {
-			return {
-				time: message.time - 200,
-				value: message.value.value.value,
-				alt: message.value.value.alt
+				var observables = Object.keys($scope.inputs).map(function (key) {
+					return scheduler.createColdObservable(
+						$scope.inputs[key].map(function (value) {
+							return onNext(value.time, { value: value.value, alt: value.alt });
+						}));
+				});
+
+				var userDefinedFunction = new Function('first', 'second', $scope.src);
+
+				var res = scheduler.startWithCreate(function () {
+					var first = observables[0];
+					var second = observables[1];
+					return userDefinedFunction(first, second);
+				});
+
+				return res.messages.map(function (message) {
+					return {
+						time: message.time - 200,
+						value: message.value.value.value,
+						alt: message.value.value.alt
+					}
+				});
 			}
-		});
+			catch (error) {
+				console.error(error);
+			}
+		}
 
-		$scope.outputs = { result: result };
+		$scope.outputs = { result: getResult() };
+
+		$scope.$watch('src', function () {
+			$scope.outputs = { result: getResult() };
+		});
 
 		$scope.position = function (marble) {
 			return (5 + marble.time * 0.9) + '%';
