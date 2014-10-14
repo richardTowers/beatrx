@@ -2,6 +2,7 @@ html, body {
 	height: 100%;
 	background-color: rgb(253, 212, 44);
 	margin: 0;
+	font-family: Impact, Helvetica, arial, sans-serif;
 }
 
 [ng-cloak] {
@@ -24,14 +25,13 @@ header img {
 
 h1 {
 	text-transform: uppercase;
-	font-family: Impact, Helvetica, arial, sans-serif;
 	font-size: 4em;
 }
 
 main {
 	display: block;
 	background-color: #151515;
-	color: white;
+	color: rgb(253, 212, 44);
 	width: 90%;
 	margin-left: auto;
 	margin-right: auto;
