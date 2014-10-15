@@ -5,8 +5,8 @@ angular.module('beatrx', ['ui.codemirror'])
 		$scope.inputs = {
 			first: [
 				{time: 10, value: 'A'},
-				{time: 50, value: 'B'},
-				{time: 90, value: 'C'}
+				{time: 20, value: 'B'},
+				{time: 30, value: 'C'}
 			],
 			second: [
 				{time: 15, value: '1', alt: true},
@@ -22,9 +22,27 @@ angular.module('beatrx', ['ui.codemirror'])
 			smartIndent: false
 		};
 
-		$scope.src = 'return first\n' +
-			'\t\t.map(function (x) { return { value: x.value.toLowerCase() }; })\n' +
-			'\t\t.merge(second);';
+		var supportsArrowFunctions = (function () {
+			try {
+				eval('() => {}');
+				return true;
+			}
+			catch (x) {
+				return false;
+			}
+		})();
+
+		if (supportsArrowFunctions) {
+			$scope.src = 'return first\n' +
+				'\t\t.map(x => x.toLowerCase())\n' +
+				'\t\t.merge(second);';
+		}
+		else {
+			$scope.src = 'return first\n' +
+				'\t\t.map(function (x) { return x.toLowerCase(); })\n' +
+				'\t\t.merge(second);';
+		}
+		
 
 		function getResult () {
 			try {
@@ -43,10 +61,14 @@ angular.module('beatrx', ['ui.codemirror'])
 				var userDefinedFunction = new Function('first', 'second', $scope.src);
 
 				var res = scheduler.startWithCreate(function () {
-					var first = observables[0];
-					var second = observables[1];
-					return userDefinedFunction(first, second);
+					var first = observables[0].map(function (x) { return x.value; });
+					var second = observables[1].map(function (x) { return x.value; });
+					return userDefinedFunction(first, second).map(function (x) {
+						return { value: x };
+					});
 				});
+
+				$scope.error = false;
 
 				return res.messages.map(function (message) {
 					return {
@@ -57,7 +79,10 @@ angular.module('beatrx', ['ui.codemirror'])
 				});
 			}
 			catch (error) {
-				console.error(error);
+				$scope.error = {
+					message: error.message,
+					stack: error.stack
+				}
 			}
 		}
 

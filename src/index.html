@@ -18,7 +18,11 @@
 		<main ng-controller='marbles' ng-cloak>
 			<div ng-repeat='(key, value) in inputs' ng-include='"marbles-template.html"'></div>
 <ui-codemirror ui-codemirror-opts='editorOptions' ng-model='src'></ui-codemirror>
-			<div ng-repeat='(key, value) in outputs' ng-include='"marbles-template.html"'></div>
+			<div class='error' ng-show='error'>
+				<p>{{error.message}}</p>
+				<pre>{{error.stack}}</p>
+			</div>
+			<div ng-hide='error' ng-repeat='(key, value) in outputs' ng-include='"marbles-template.html"'></div>
 		</main>
 		<script src='../bower_components/angular/angular.js'></script>
 		<script src='../bower_components/rxjs/dist/rx.js'></script>

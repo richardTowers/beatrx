@@ -92,8 +92,11 @@ text {
 	font-size: 1.5em;
 	padding-top: 1em;
 	padding-bottom: 1em;
-
 }
 .cm-s-blackboard.CodeMirror {
 	background-color: black;
+}
+.error {
+	color: red;
+	font-family: monospace;
 }
